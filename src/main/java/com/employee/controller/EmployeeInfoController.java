@@ -47,5 +47,22 @@ public class EmployeeInfoController {
 		}
 		return CommonUtils.getJson(res);
 	}
+
+@RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = "application/json")
+	public String getallemployeeinfo() throws Exception{
+		
+		List<EmployeeInfoModel> employeeinfo =((EmployeeInfoService)employeeinfoservice).getallemployeeinfo();
+		
+		Response res = CommonUtils.getResponseObject("List of employeeinfo");
+		if (employeeinfo.isEmpty()) {
+			ErrorObject err = CommonUtils.getErrorResponse("employeeinfo Not Found", "employeeinfo Not Found");
+			res.setErrors(err);
+			res.setStatus(StatusCode.ERROR.name());
+		} else {
+			res.setData(employeeinfo);
+		}
+		return CommonUtils.getJson(res);
+		
+	}
 	
 }
